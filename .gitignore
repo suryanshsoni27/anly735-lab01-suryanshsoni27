@@ -33,7 +33,4 @@ data/hour.csv
 data/Bike-Sharing-Dataset.zip
 data/day.csv
 
-# Rendered laboratory document
-# Students submit the Word document to Canvas; the reproducibility
-# record in GitHub centers on source, code, and generated evidence.
-replication-lab.docx
+# The completed Word report is intentionally tracked alongside its source.

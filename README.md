@@ -1,3 +1,52 @@
+# ANLY 735 Laboratory 1: Suryansh Soni
+
+Completed Python-track replication of **Evaluation Design Matters**.
+
+## Completed files
+
+- [`python/lab01_analysis.py`](python/lab01_analysis.py): original course analysis, unchanged.
+- [`replication-lab.qmd`](replication-lab.qmd): completed Quarto source recovered from the assignment chat.
+- [`replication-lab.docx`](replication-lab.docx): corrected Quarto-rendered Word report from that chat.
+- [`analysis/lab01_results.csv`](analysis/lab01_results.csv): regenerated model results.
+- [`analysis/model_performance.png`](analysis/model_performance.png): original figure recovered from the Word report.
+- [`analysis/reproduction_check.json`](analysis/reproduction_check.json): local verification environment, checksums, results, and split statistics.
+- [`python/verify_report.py`](python/verify_report.py): checks the generated CSV against both reports and verifies the supporting figure and split statistics.
+- [`requirements.txt`](requirements.txt): exact dependency versions used for the verification run.
+
+## Reproduce the analysis
+
+Use Python 3.12. The verification run used Python 3.12.12; the imported report records Python 3.12.14 for its original run. Both use pandas 2.2.3, NumPy 2.3.5, and scikit-learn 1.8.0. Additional installed versions are pinned in `requirements.txt`.
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python python/lab01_analysis.py
+python python/verify_report.py
+```
+
+The original script downloads the public UCI Bike Sharing Dataset on its first run. Downloaded data and virtual environments are intentionally ignored by Git. The verifier does not edit the report or its results. It fails if the regenerated metrics differ from the report at the two-decimal precision used by the course script.
+
+To render the source again with [Quarto](https://quarto.org/docs/get-started/):
+
+```bash
+quarto render replication-lab.qmd --to docx
+```
+
+The original Quarto source and corrected Word report are preserved byte for byte. The Word report was rendered to page images locally and visually reviewed. Its table of contents is a Word field; use **Update Field > Update entire table** in Word if it is blank.
+
+The imported report predates this GitHub publication, so its GitHub checklist item is still unchecked. This repository is the published reproducibility record. Canvas submission is separate and has not been performed here.
+
+## Provenance
+
+Based on the [official ANLY 735 template](https://github.com/ANLY-735-Predictive-AI/replication-lab-01-evaluation-design-matters), commit `fd8ce1bf8c4c02a8a5fbf2e65fb10802f9b6c86b`. The original Python and R analysis files are retained. The R track was not run.
+
+The imported report presents the original author's expectations and interpretation. The later verification run checks its numerical evidence; it does not establish when those original expectations were recorded.
+
+---
+
+The course template instructions follow.
+
 # Replication Laboratory #1 — Evaluation Design Matters
 
 **ANLY 735 — Research Seminar in Predictive AI**

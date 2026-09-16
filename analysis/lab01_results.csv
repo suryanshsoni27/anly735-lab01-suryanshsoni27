@@ -1,0 +1,5 @@
+Evaluation Design,Model,RMSE,MAE
+Random,Ridge Regression,100.94,74.64
+Random,Random Forest,52.08,32.55
+Temporal,Ridge Regression,133.91,98.87
+Temporal,Random Forest,84.04,56.05

@@ -1,0 +1,77 @@
+{
+  "verified_at_utc": "2026-09-16T02:04:55.839205+00:00",
+  "template_commit": "fd8ce1bf8c4c02a8a5fbf2e65fb10802f9b6c86b",
+  "python": "3.12.12",
+  "platform": "Darwin arm64",
+  "packages": {
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0",
+    "threadpoolctl": "3.7.0"
+  },
+  "report_metrics_match_generated_csv": true,
+  "word_report_metrics_match_generated_csv": true,
+  "figure_matches_original_word_report": true,
+  "split_summary": {
+    "random_train": {
+      "observations": 13903,
+      "first_hour": "2011-01-01 01:00:00",
+      "last_hour": "2012-12-31 23:00:00",
+      "mean_hourly_rentals": 189.57
+    },
+    "random_test": {
+      "observations": 3476,
+      "first_hour": "2011-01-01 00:00:00",
+      "last_hour": "2012-12-31 17:00:00",
+      "mean_hourly_rentals": 189.02
+    },
+    "temporal_train": {
+      "observations": 13903,
+      "first_hour": "2011-01-01 00:00:00",
+      "last_hour": "2012-08-07 11:00:00",
+      "mean_hourly_rentals": 174.64
+    },
+    "temporal_test": {
+      "observations": 3476,
+      "first_hour": "2012-08-07 12:00:00",
+      "last_hour": "2012-12-31 23:00:00",
+      "mean_hourly_rentals": 248.75
+    }
+  },
+  "results": [
+    {
+      "Evaluation Design": "Random",
+      "Model": "Ridge Regression",
+      "RMSE": 100.94,
+      "MAE": 74.64
+    },
+    {
+      "Evaluation Design": "Random",
+      "Model": "Random Forest",
+      "RMSE": 52.08,
+      "MAE": 32.55
+    },
+    {
+      "Evaluation Design": "Temporal",
+      "Model": "Ridge Regression",
+      "RMSE": 133.91,
+      "MAE": 98.87
+    },
+    {
+      "Evaluation Design": "Temporal",
+      "Model": "Random Forest",
+      "RMSE": 84.04,
+      "MAE": 56.05
+    }
+  ],
+  "sha256": {
+    "python/lab01_analysis.py": "fa580d4c1e8c5b9e07de2f0312bb4e8e592e85fb96a63bec3a8f22f7e6e877f9",
+    "replication-lab.qmd": "12664671662bc6c6801e173dad5cafb5d18fd756b14e5613444ab8e0c1555164",
+    "replication-lab.docx": "a5fb20783212b9e95704df5683d2b7873eb8d437c850f8ae4ab4c0b6bbdfd150",
+    "analysis/lab01_results.csv": "bf2ba8086f6c4c5a745f3b82d07a1c797c4f0f7ed96d34574b45a43b3a8b7479",
+    "analysis/model_performance.png": "225d752701fc09d7ddd8f7c72dc9e73349900cd460905ba0ed28ca204d9621bf",
+    "data/hour.csv": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f"
+  }
+}

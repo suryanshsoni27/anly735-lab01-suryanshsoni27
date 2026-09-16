@@ -1,0 +1,39 @@
+# ============================================================
+# ANLY 735 — Replication Laboratory #1
+# Git ignore rules
+# ============================================================
+
+# Quarto generated support files and caches
+.quarto/
+*_files/
+*_cache/
+
+# Python caches / environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# R session / project artifacts
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# Operating system / editor artifacts
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Downloaded source data
+# The analysis scripts acquire these reproducibly.
+data/hour.csv
+data/Bike-Sharing-Dataset.zip
+data/day.csv
+
+# Rendered laboratory document
+# Students submit the Word document to Canvas; the reproducibility
+# record in GitHub centers on source, code, and generated evidence.
+replication-lab.docx

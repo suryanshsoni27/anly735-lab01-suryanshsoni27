@@ -1,0 +1,514 @@
+---
+title: "Replication Laboratory #1"
+subtitle: "Evaluation Design Matters"
+author: "ANLY 735 — Research Seminar in Predictive AI"
+format:
+  docx:
+    toc: true
+    number-sections: true
+    reference-links: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Laboratory Question
+
+> **Does changing the evaluation design change estimated predictive performance—and does it change which model appears stronger?**
+
+In this laboratory, you will investigate how a seemingly simple methodological choice—**how observations are divided into training and testing data**—can materially affect the evidence produced by a predictive model.
+
+You will analyze the same prediction problem using the same dataset, same predictors, same models, and same evaluation metrics under two different evaluation designs:
+
+1. **Random evaluation** — training and testing observations are sampled without preserving temporal order.
+2. **Temporally structured evaluation** — earlier observations are used for training and later observations are reserved for testing.
+
+Your goal is not to prove that one design must always produce better or worse performance. Your goal is to determine what the evidence actually shows and whether your research claim changes when the evaluation design changes.
+
+> **Do not chase a predetermined result. Investigate what the evidence actually supports.**
+
+# Learning Objectives
+
+By the end of this laboratory, you should be able to:
+
+- distinguish random evaluation from temporally structured evaluation;
+- explain why evaluation design is part of the research design rather than merely a coding decision;
+- compare model performance using **RMSE** and **MAE**;
+- determine whether model ranking is stable across evaluation designs;
+- identify when an apparently strong predictive result may depend on the evaluation strategy;
+- assess whether an evaluation design matches the intended deployment scenario;
+- formulate a defensible replication verdict based on evidence; and
+- communicate what the evidence permits you to claim—and what it does not.
+
+# Research Context
+
+Predictive performance is not an intrinsic property of a model. It is estimated under a particular evaluation design.
+
+A model that performs well when observations are randomly divided between training and testing sets may perform differently when asked to predict observations that occur later in time. This matters whenever a real-world deployment requires a model trained on historical data to make predictions about future cases.
+
+This laboratory therefore treats **evaluation design as an experimental condition**.
+
+The central comparison is:
+
+```text
+                     SAME PREDICTION PROBLEM
+                              |
+                +-------------+-------------+
+                |                           |
+         RANDOM EVALUATION          TEMPORAL EVALUATION
+                |                           |
+        Ridge Regression            Ridge Regression
+        Random Forest               Random Forest
+                |                           |
+           RMSE + MAE                  RMSE + MAE
+                |                           |
+                +-------------+-------------+
+                              |
+                       COMPARE EVIDENCE
+                              |
+                    DOES THE CLAIM CHANGE?
+```
+
+# Dataset
+
+You will use the **UCI Bike Sharing Dataset**, which contains hourly bike-rental observations collected across 2011 and 2012.
+
+The prediction outcome is:
+
+- `cnt` — total number of bike rentals in a given hour.
+
+The analysis uses weather, calendar, and temporal predictors that could reasonably be available at prediction time.
+
+## Variables Used
+
+### Outcome
+
+- `cnt`
+
+### Categorical predictors
+
+- `season`
+- `yr`
+- `mnth`
+- `hr`
+- `holiday`
+- `weekday`
+- `workingday`
+- `weathersit`
+
+### Numeric predictors
+
+- `temp`
+- `atemp`
+- `hum`
+- `windspeed`
+
+## Variables intentionally excluded
+
+The following variables should **not** be used as predictors:
+
+- `instant` — row identifier;
+- `dteday` — used to establish chronology rather than as a direct predictor;
+- `casual` — component of the outcome;
+- `registered` — component of the outcome.
+
+The UCI documentation defines `cnt` as the total of casual and registered users. Including either component as a predictor would provide the model with information that is effectively part of the answer.
+
+> **Evaluation design matters—but so does information legitimacy.**
+
+# Reproducibility Workflow
+
+Use the GitHub repository created from the course template.
+
+Your workflow should be:
+
+```text
+Course Template
+      ↓
+Your GitHub Repository
+      ↓
+Clone Locally
+      ↓
+Run Analysis
+      ↓
+Complete This Quarto Document
+      ↓
+Render to Word
+      ↓
+Review and Revise
+      ↓
+Commit and Push
+      ↓
+Submit .docx in Canvas
+```
+
+You may complete the analysis using **Python or R**. You are not required to use both languages.
+
+# Research Claim
+
+Before examining the results, formulate the broad claim that this laboratory is testing.
+
+## Your Initial Claim
+
+Write 2–4 sentences describing what you would want to claim if you were comparing these two predictive models.
+
+Consider:
+
+- What is being predicted?
+- Which models are being compared?
+- What would it mean to say that one model is "better"?
+- What evidence would be needed to justify that statement?
+
+**Your response:**
+
+[Write here.]
+
+# Predict Before You Inspect
+
+Before running the analysis, record your expectations.
+
+## Prediction 1 — Estimated Performance
+
+Do you expect RMSE and MAE to be similar or different under random and temporal evaluation? Why?
+
+**Your response:**
+
+[Write here.]
+
+## Prediction 2 — Model Ranking
+
+Do you expect the stronger model to remain the same under both evaluation designs? Why or why not?
+
+**Your response:**
+
+[Write here.]
+
+> Your prediction is not graded on whether it turns out to be correct. The purpose is to make your prior reasoning visible before you inspect the evidence.
+
+# Replicate the Analysis
+
+Run the analysis script for the language you selected.
+
+## Python Track
+
+Run:
+
+```text
+python .\python\lab01_analysis.py
+```
+
+## R Track
+
+Run:
+
+```text
+Rscript .\r\lab01_analysis.R
+```
+
+If you use RStudio, you may instead open the R script and run it interactively.
+
+Your analysis should:
+
+1. acquire or access the dataset reproducibly;
+2. establish chronological order;
+3. define the prediction outcome and predictors;
+4. fit the same two models under both evaluation designs;
+5. calculate RMSE and MAE;
+6. display model rankings; and
+7. preserve enough information for another researcher to reproduce your analysis.
+
+# Record Your Results
+
+Complete the table below using the output generated by your analysis.
+
+| Evaluation Design | Model | RMSE | MAE |
+|---|---|---:|---:|
+| Random | Ridge Regression |  |  |
+| Random | Random Forest |  |  |
+| Temporal | Ridge Regression |  |  |
+| Temporal | Random Forest |  |  |
+
+Do not interpret the results yet. First record what the analysis actually produced.
+
+# FAIR Model Comparison Audit
+
+Use the **FAIR Model Comparison Audit** to evaluate what the evidence means.
+
+## F — Frame
+
+**What exactly is being compared?**
+
+Address all of the following:
+
+- What is the prediction problem?
+- What is the outcome?
+- Which two models are being compared?
+- What remains constant across the two evaluation designs?
+- What is the main methodological condition that changes?
+
+**Your response:**
+
+[Write here.]
+
+# A — Align
+
+**Are the model comparisons fair within each evaluation design?**
+
+Consider:
+
+- Are the models evaluated on the same outcome?
+- Are they given the same predictor information?
+- Are the same performance metrics used?
+- Is preprocessing applied consistently?
+- Is the test set untouched during model fitting?
+- Is anything besides the evaluation design changing in a way that could confound your comparison?
+
+**Your response:**
+
+[Write here.]
+
+# I — Inspect
+
+**What do RMSE and MAE show?**
+
+First, explain each metric briefly in the context of this prediction problem.
+
+## RMSE
+
+Explain what RMSE tells you here and whether lower or higher values indicate better predictive performance.
+
+**Your response:**
+
+[Write here.]
+
+## MAE
+
+Explain what MAE tells you here and whether lower or higher values indicate better predictive performance.
+
+**Your response:**
+
+[Write here.]
+
+## Performance Comparison
+
+Now compare the results.
+
+Address all of the following:
+
+1. Which model performs better under random evaluation?
+2. Which model performs better under temporal evaluation?
+3. How much does each model's RMSE change between evaluation designs?
+4. How much does each model's MAE change between evaluation designs?
+5. Is one model more sensitive to the change in evaluation design than the other?
+
+You may calculate absolute or percentage changes where helpful.
+
+**Your response:**
+
+[Write here.]
+
+# R — Review
+
+**Does the conclusion change when the evaluation design changes?**
+
+Distinguish between at least two kinds of conclusions:
+
+### Conclusion about model ranking
+
+Does the identity of the stronger model change?
+
+**Your response:**
+
+[Write here.]
+
+### Conclusion about expected predictive performance
+
+Does the estimated level of performance change?
+
+**Your response:**
+
+[Write here.]
+
+### Conclusion about deployment
+
+Which evaluation design better represents a situation in which a model is trained on historical observations and then used to predict future observations? Explain.
+
+**Your response:**
+
+[Write here.]
+
+# Diagnose the Difference
+
+Now move beyond reporting numbers.
+
+Why might random and temporal evaluation produce different estimates of predictive performance?
+
+Your discussion should consider at least three of the following:
+
+- temporal ordering;
+- changes in demand over time;
+- changing relationships between predictors and the outcome;
+- seasonality;
+- distribution shift;
+- the difference between interpolating within a historical mixture and predicting later observations;
+- whether the test set resembles the situation in which the model would actually be deployed.
+
+**Your response:**
+
+[Write here.]
+
+# Reconsider the Original Claim
+
+Return to the claim you wrote before examining the results.
+
+Rewrite it so that it reflects the evidence produced by both evaluation designs.
+
+Your revised claim should distinguish between:
+
+- **relative model performance** — which model performs better; and
+- **absolute or expected predictive performance** — how well the model is estimated to perform.
+
+Avoid statements that go beyond the evidence.
+
+**Revised claim:**
+
+[Write here.]
+
+# Replication Verdict
+
+Select **one** verdict.
+
+- **Reproduced**
+- **Partially Reproduced**
+- **Not Reproduced**
+- **Inconclusive**
+
+Your verdict should refer to the claim you investigated—not whether your numbers happen to match another student's numbers exactly.
+
+## Verdict
+
+**Selected verdict:** [Choose one.]
+
+## Defense of Verdict
+
+In approximately 150–250 words, defend your verdict using evidence from your analysis.
+
+A strong defense should answer:
+
+- What result was stable across evaluation designs?
+- What result changed?
+- How important was that change?
+- Does the evidence support the original claim fully, partially, or not at all?
+- What uncertainty remains?
+
+**Your response:**
+
+[Write here.]
+
+# Extension — What Would You Test Next?
+
+Replication should not end with reproduction. Good replication work reveals the next research question.
+
+Propose **one defensible extension** to this laboratory.
+
+Examples might include:
+
+- rolling or expanding-window validation;
+- a different temporal cutoff;
+- repeated temporal evaluation;
+- additional models;
+- model calibration or prediction intervals;
+- feature stability across time;
+- subgroup performance;
+- a different operational definition of the prediction horizon;
+- explicitly modeling trend or seasonality.
+
+Do not simply list an idea. Explain:
+
+1. what you would change;
+2. why it matters;
+3. what new evidence it would produce; and
+4. what research claim that evidence could support.
+
+**Your response:**
+
+[Write here.]
+
+# Claim Boundary
+
+Complete the following statements.
+
+## What the evidence supports
+
+> Based on this laboratory, the evidence supports the claim that...
+
+[Complete the sentence.]
+
+## What the evidence does not support
+
+> Based on this laboratory, the evidence does not support the claim that...
+
+[Complete the sentence.]
+
+# Researcher Takeaway
+
+In **2–3 sentences**, state the most important lesson this laboratory teaches about predictive model evaluation.
+
+Do not merely restate your numerical results. Explain the methodological lesson.
+
+**Your response:**
+
+[Write here.]
+
+# Reproducibility Check
+
+Before submitting, confirm each item.
+
+- [ ] I created my repository from the official ANLY 735 template.
+- [ ] I used either the Python or R analysis track.
+- [ ] I ran the analysis successfully.
+- [ ] I did not manually alter results.
+- [ ] I recorded RMSE and MAE from my own analysis.
+- [ ] I compared both evaluation designs.
+- [ ] I completed the FAIR Model Comparison Audit.
+- [ ] I provided a replication verdict supported by evidence.
+- [ ] I distinguished model ranking from estimated predictive performance.
+- [ ] I proposed a defensible extension.
+- [ ] I rendered this Quarto document to Word.
+- [ ] I reviewed the rendered document before submission.
+- [ ] I committed and pushed my completed source files to GitHub.
+- [ ] I submitted the final `.docx` file in Canvas.
+
+# Submission Requirements
+
+Submit the **rendered Word document (`.docx`)** to Canvas.
+
+Your GitHub repository serves as the reproducibility record for your analysis, code, Quarto source, and research decisions.
+
+Unless your instructor explicitly requests otherwise, do not submit raw scripts separately in Canvas.
+
+# Evaluation
+
+This laboratory is worth **20 points**.
+
+Your work will be evaluated on the quality of your:
+
+- reproducible analytical workflow;
+- evidence-based comparison;
+- interpretation of RMSE and MAE;
+- FAIR Model Comparison Audit;
+- reasoning about evaluation design;
+- replication verdict;
+- claim boundaries; and
+- research extension.
+
+The goal is not to obtain a predetermined set of numbers.
+
+> **Do not chase identical numbers. Investigate reproducibility.**
+
+# References
+
+Fanaee-T, H., & Gama, J. (2014). Event labeling combining ensemble detectors and background knowledge. *Progress in Artificial Intelligence, 2*, 113–127. https://doi.org/10.1007/s13748-013-0040-3
+
+UCI Machine Learning Repository. (n.d.). *Bike Sharing dataset*. https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset
